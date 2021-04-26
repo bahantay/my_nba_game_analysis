@@ -1,44 +1,24 @@
 import re as re
 import csv as csv
 
-with open ('text.txt','r', encoding='utf-8') as csv_text:
-    text_lines = csv.reader(csv_text, delimiter = '|')
-    each_play = [each for each in text_lines] #make list of play by play
-    txt_play = [each[-1] for each in each_play] # only take plays 
-    txt_teams = [each[2] for each in each_play] # defines team
-    txt_home = each_play[1][4] # home team
-    print(txt_teams)
 
-def all_players(play_by_play):
+
+def func_all_players(play_by_players): #function to define all playyers
     lst_players = []
     
-    for i in range(len(play_by_play)):
-        name = re.search(r'\w\. \w+', play_by_play[i])
-        #foul = re.search(r'foul by \w\. \w+', play_by_play[i])
-        #print(foul.group(0))
+    for i in range(len(play_by_players)):
+        name = re.search(r'\w\. \w+', play_by_players[i])
         if name:
-            #if foul:
-            #    foul = foul.group(0)
             name = name.group(0)
-            #print(foul)
-            # this is for team arranging
-           #if team[index] == home:
-           #    #print("home index")
-           #    if (name not in lst_home) and foul ==None:
-           #        lst_home.append(name)
-           #else:
-           #    #print("away index")
-           #    if (name not in lst_away) and foul ==None:
-           #        lst_away.append(name)
             if name not in lst_players:
                 lst_players.append(name)
 
     return(lst_players)    
 
-def analyse_nba_game(play_by_play):
+def func_stats(play_by_playst): # function to sort statistics
 
     lst_names = []
-    lst_names = all_players(play_by_play)
+    lst_names = func_all_players(play_by_playst)
 
     lst_stats = []
     
@@ -46,23 +26,23 @@ def analyse_nba_game(play_by_play):
         dict_profile = {"player_name": '', "FG": 0, "FGA": 0, "FG%": 0, "3P": 0, "3PA": 0, "3P%": 0, "FT": 0, "FTA": 0, "FT%": 0, "ORB": 0, "DRB": 0, "TRB": 0, "AST": 0, "STL": 0, "BLK": 0, "TOV": 0, "PF": 0, "PTS": 0}
         dict_profile["player_name"] = player
 
-        for i in range(len(play_by_play)):
-            name = re.search(r'(\w\. \w+)', play_by_play[i]) 
-            two_pt= re.search(r'(\w\. \w+) makes 2-pt', play_by_play[i])
-            two_pt_at = re.search(r'(\w\. \w+) misses 2-pt', play_by_play[i])
-            three_pt = re.search(r'(\w\. \w+) makes 3-pt', play_by_play[i])
-            three_pt_at = re.search(r'(\w\. \w+) misses 3-pt', play_by_play[i])
-            free_throw = re.search(r'(\w\. \w+) makes free throw', play_by_play[i])
-            free_throw_clear = re.search(r'(\w\. \w+) makes clear path free throw', play_by_play[i])
-            free_throw_at = re.search(r'(\w\. \w+) misses free throw', play_by_play[i])
-            free_throw_clear_at = re.search(r'(\w\. \w+) misses clear path free throw', play_by_play[i])
-            def_reb = re.search(r'Defensive rebound by (\w\. \w+)', play_by_play[i])
-            off_reb = re.search(r'Offensive rebound by (\w\. \w+)', play_by_play[i])
-            assists = re.search(r'(assist by) (\w\. \w+)', play_by_play[i])
-            turnover = re.search(r'Turnover by (\w\. \w+)', play_by_play[i])
-            steal = re.search(r'(steal by) (\w\. \w+)', play_by_play[i])
-            block = re.search(r'(block by) (\w\. \w+)', play_by_play[i])
-            foul = re.search(r'foul by (\w\. \w+)', play_by_play[i])
+        for i in range(len(play_by_playst)):
+            name = re.search(r'(\w\. \w+)', play_by_playst[i]) 
+            two_pt= re.search(r'(\w\. \w+) makes 2-pt', play_by_playst[i])
+            two_pt_at = re.search(r'(\w\. \w+) misses 2-pt', play_by_playst[i])
+            three_pt = re.search(r'(\w\. \w+) makes 3-pt', play_by_playst[i])
+            three_pt_at = re.search(r'(\w\. \w+) misses 3-pt', play_by_playst[i])
+            free_throw = re.search(r'(\w\. \w+) makes free throw', play_by_playst[i])
+            free_throw_clear = re.search(r'(\w\. \w+) makes clear path free throw', play_by_playst[i])
+            free_throw_at = re.search(r'(\w\. \w+) misses free throw', play_by_playst[i])
+            free_throw_clear_at = re.search(r'(\w\. \w+) misses clear path free throw', play_by_playst[i])
+            def_reb = re.search(r'Defensive rebound by (\w\. \w+)', play_by_playst[i])
+            off_reb = re.search(r'Offensive rebound by (\w\. \w+)', play_by_playst[i])
+            assists = re.search(r'(assist by) (\w\. \w+)', play_by_playst[i])
+            turnover = re.search(r'Turnover by (\w\. \w+)', play_by_playst[i])
+            steal = re.search(r'(steal by) (\w\. \w+)', play_by_playst[i])
+            block = re.search(r'(block by) (\w\. \w+)', play_by_playst[i])
+            foul = re.search(r'foul by (\w\. \w+)', play_by_playst[i])
 
             if name:
                 name2 = name.group(0)
@@ -133,18 +113,75 @@ def analyse_nba_game(play_by_play):
 
     #team arranging 
     #dict_final = {"home_team": {"name": "", "players_data": lst_home}, "away_team": {"name": "", "players_data": lst_away}}
-                   
-    print(lst_stats[0])
+    return lst_stats               
+    #print(lst_stats[0]["player_name"])
 
-def home_team(stats, home, txt_teams):
-    for player in stats:
 
-    return lst_home
-def away_team(stats, home, txt_teams):
+def home_team(stats, home, play_by_play, txt_posession): #function to sort home team
+    #index = 0
+    lst_home_sort = []
+    for i in range(len(stats)):
+        check = stats[i]["player_name"]
+        #print(check)
+        for j in range(len(play_by_play)):
+            name = re.search(r'(\w\. \w+)', play_by_play[j])
+            foul = re.search(r'foul by \w\. \w+', play_by_play[j])
+            if name:
+                #print("1st if",check)
+                name1 = name.group()
+                if check == name1 and txt_posession[j] == home:
+                        if (stats[i] not in lst_home_sort) and foul == None:
+                    #print("2 if",check)
+                            lst_home_sort.append(stats[i])
+        #index +=1
+    return lst_home_sort
 
-    return lst_home
-all_players(txt_play)
-analyse_nba_game(txt_play)
+
+def away_team(stats, home, play_by_play, txt_posession): # function to sort away team
+    lst_away_sort = []
+    for i in range(len(stats)):
+        check = stats[i]["player_name"]
+        #print(check)
+        for j in range(len(play_by_play)):
+            name = re.search(r'(\w\. \w+)', play_by_play[j])
+            foul = re.search(r'foul by \w\. \w+', play_by_play[j])
+            if name:
+                #print("1st if",check)
+                name1 = name.group()
+                if check == name1 and txt_posession[j] != home:
+                        if (stats[i] not in lst_away_sort) and foul == None:
+                    #print("2 if",check)
+                            lst_away_sort.append(stats[i])
+        #index +=1
+    return lst_away_sort
+
+def analyse_nba_game(play_by_play): #main function
+    with open (play_by_play,'r', encoding='utf-8') as csv_text:
+        text_lines = csv.reader(csv_text, delimiter = '|')
+        each_play = [each for each in text_lines] #make list of play by play
+        txt_play = [each[-1] for each in each_play] # only take plays 
+        txt_teams = [each[2] for each in each_play] # defines team
+        txt_home = each_play[1][4] # home team
+       
+        txt_away = each_play[1][3] # away team
+        
+    func_stats(txt_play)
+
+    lst_stats = []
+    lst_stats = func_stats(txt_play)
+    
+
+    lst_home_final = []
+    lst_away_final = []
+    lst_home_final = home_team(lst_stats, txt_home, txt_play, txt_teams)
+    #print(lst_home_final)
+    lst_away_final = away_team(lst_stats, txt_home, txt_play, txt_teams)
+    #print(lst_away_final)
+    dict_final = {"home_team": {"name": txt_home, "players_data": lst_home_final}, "away_team": {"name": txt_away, "players_data": lst_away_final}}
+    #print(txt_teams)
+
+    print(dict_final)
+analyse_nba_game("/home/docode/project/text.txt")
 
 
 #analyse_nba_game()
