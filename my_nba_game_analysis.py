@@ -15,7 +15,7 @@ with open ('text.txt','r', encoding='utf-8') as csv_text:
     #two_ptt = 
     #two_ptta
     #three_pt
-    #three_pta
+    #three_ptad
     #free_throw
     #def_reb
     #off_reb
@@ -57,16 +57,28 @@ def all_players(team, home, play_by_play):
 #def all_player_match():
 #    return
 #
-def analyse_nba_game(play_by_play_moves):
+def analyse_nba_game(play_by_play, lst_home, lst_away):
 
-    
+    {"player_name": '', "FG": 0, "FGA": 0, "FG%": 0, "3P": 0, "3PA": 0, "3P%": 0, "FT": 0, "FTA": 0, "FT%": 0, "ORB": 0, "DRB": 0, "TRB": 0, "AST": 0, "STL": 0, "BLK": 0, "TOV": 0, "PF": 0, "PTS": 0}
     for i in range(len(play_by_play)):
         name = re.search(r'\w\. \w+', play_by_play[i])
         foul = re.search(r'foul by \w\. \w+', play_by_play[i])
+        two_pt= re.search(r'\w\. \w+ makes 2-pt', play_by_play[i])
+        two_pt_at = re.search(r'\w\. \w+ misses ', play_by_play[i])
+        three_pt = re.search(r'\w\. \w+ makes 3-pt', play_by_play[i])
+        three_pt_at = re.search(r'\w\. \w+ misses 3-pt', play_by_play[i])
+        free_throw = re.search(r'\w\. \w+ makes free throw', play_by_play[i])
+        free_throw_at = re.search(r'\w\. \w+ misses free throw', play_by_play[i])
+        def_reb = re.search(r'Defensive rebound by \w\. \w+', play_by_play[i])
+        off_reb = re.search(r'Offensive rebound by \w\. \w+', play_by_play[i])
+        assists = re.search(r'assist by \w\. \w+', play_by_play[i])
+        turnover = re.search(r'Turnover by \w\. \w+', play_by_play[i])
+        steal = re.search(r'steal by \w\. \w+', play_by_play[i])
+        foul = re.search(r'foul by \w\. \w+', play_by_play[i])
+
+
         #print(foul.group(0))
         if name:
-            #if foul:
-            #    foul = foul.group(0)
             name = name.group(0)
             #print(foul)
             if team[index] == home:
