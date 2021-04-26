@@ -11,8 +11,7 @@ with open ('text.txt','r', encoding='utf-8') as csv_text:
     #print(txt_home)
     #print(txt_play)
     #patterns
-    #field_goals
-    #re.pattern(txt_play)
+    
     #two_ptt = 
     #two_ptta
     #three_pt
@@ -38,7 +37,7 @@ def all_players(team, home, play_by_play):
             #if foul:
             #    foul = foul.group(0)
             name = name.group(0)
-            print(foul)
+            #print(foul)
             if team[index] == home:
                 #print("home index")
                 if (name not in lst_home) and foul ==None:
@@ -58,8 +57,28 @@ def all_players(team, home, play_by_play):
 #def all_player_match():
 #    return
 #
-#def analyse_nba_game(play_by_play_moves):
-#    return
+def analyse_nba_game(play_by_play_moves):
+
+    
+    for i in range(len(play_by_play)):
+        name = re.search(r'\w\. \w+', play_by_play[i])
+        foul = re.search(r'foul by \w\. \w+', play_by_play[i])
+        #print(foul.group(0))
+        if name:
+            #if foul:
+            #    foul = foul.group(0)
+            name = name.group(0)
+            #print(foul)
+            if team[index] == home:
+                #print("home index")
+                if (name not in lst_home) and foul ==None:
+                    lst_home.append(name)
+            else:
+                #print("away index")
+                if (name not in lst_away) and foul ==None:
+                    lst_away.append(name)
+        index+=1
+    return
 
 all_players(txt_teams, txt_home, txt_play)
 
