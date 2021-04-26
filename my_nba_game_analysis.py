@@ -7,6 +7,7 @@ with open ('text.txt','r', encoding='utf-8') as csv_text:
     txt_play = [each[-1] for each in each_play] # only take plays 
     txt_teams = [each[2] for each in each_play] # defines team
     txt_home = each_play[1][4] # home team
+    print(txt_teams)
 
 def all_players(play_by_play):
     lst_players = []
@@ -128,9 +129,20 @@ def analyse_nba_game(play_by_play):
                     dict_profile["FT%"] = round((dict_profile["FT"]/dict_profile["FTA"]),3)
                 else:
                     dict_profile["FT%"] = 0
-        lst_stats.append(dict_profile)                
-    print(lst_stats)
+        lst_stats.append(dict_profile)
 
+    #team arranging 
+    #dict_final = {"home_team": {"name": "", "players_data": lst_home}, "away_team": {"name": "", "players_data": lst_away}}
+                   
+    print(lst_stats[0])
+
+def home_team(stats, home, txt_teams):
+    for player in stats:
+
+    return lst_home
+def away_team(stats, home, txt_teams):
+
+    return lst_home
 all_players(txt_play)
 analyse_nba_game(txt_play)
 
