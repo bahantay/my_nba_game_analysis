@@ -95,10 +95,13 @@ def func_stats(play_by_playst): # function to sort statistics
                         dict_profile["BLK"] +=1
 
                 #total pts and %
-                dict_profile["PTS"] = 2*(dict_profile["FG"]-dict_profile["3P"])+3*(dict_profile["3P"])+dict_profile["FT"]
-
+                if dict_profile["FG"] != 0:
+                    dict_profile["PTS"] = 2*(dict_profile["FG"]-dict_profile["3P"])+3*(dict_profile["3P"])+dict_profile["FT"]
+                else:
+                    dict_profile["PTS"] = 0
                 if dict_profile["FGA"] != 0:
                     dict_profile["FG%"] = round((dict_profile["FG"]/dict_profile["FGA"]), 3)
+                    
                 else:
                     dict_profile["FG%"] = 0
                 if dict_profile["3PA"] != 0:
@@ -181,6 +184,49 @@ def analyse_nba_game(play_by_play): #main function
     #print(txt_teams)
 
     print(dict_final)
+    print("\n")
+    print_nba_game_stats(lst_home_final)
+    print("\n")
+    print_nba_game_stats(lst_away_final)
+    #print(lst_home_final)
+
+
+#part II
+def print_nba_game_stats(team_dict):
+
+    headers = [keys for keys in team_dict[0].keys()]
+    print(*headers, sep = "\t")
+
+    for i in range(len(team_dict)):
+        print(*team_dict[i].values(), sep = "\t")
+    dict_total = {"Team Totals": 'Team Totals', "FG": 0, "FGA": 0, "FG%": 0, "3P": 0, "3PA": 0, "3P%": 0, "FT": 0, "FTA": 0, "FT%": 0, "ORB": 0, "DRB": 0, "TRB": 0, "AST": 0, "STL": 0, "BLK": 0, "TOV": 0, "PF": 0, "PTS": 0}
+    
+
+    #print totals
+    for i in range(len(team_dict)):
+        dict_total["FG"] += team_dict[i]["FG"]
+        dict_total["FGA"] += team_dict[i]["FGA"]
+        dict_total["3P"] += team_dict[i]["3P"] 
+        dict_total["3PA"] +=team_dict[i]["3PA"]
+        dict_total["FT"] += team_dict[i]["FT"] 
+        dict_total["FTA"] +=team_dict[i]["FTA"]
+        dict_total["ORB"] +=team_dict[i]["ORB"]
+        dict_total["DRB"] +=team_dict[i]["DRB"]
+        dict_total["TRB"] +=team_dict[i]["TRB"]
+        dict_total["AST"] +=team_dict[i]["AST"]
+        dict_total["STL"] +=team_dict[i]["STL"]
+        dict_total["BLK"] +=team_dict[i]["BLK"]
+        dict_total["TOV"] +=team_dict[i]["TOV"]
+        dict_total["PF"] += team_dict[i]["PF"] 
+        dict_total["PTS"] +=team_dict[i]["PTS"]
+        
+    dict_total["FG%"] = round((dict_total["FG"]/dict_total["FGA"]), 3)
+    dict_total["3P%"] = round((dict_total["3P"]/dict_total["3PA"]), 3)
+    dict_total["FT%"] = round((dict_total["FT"]/dict_total["FTA"]), 3)
+    
+    
+    print(*dict_total.values(), sep = "\t")
+    
 analyse_nba_game("/home/docode/project/text.txt")
 
 
